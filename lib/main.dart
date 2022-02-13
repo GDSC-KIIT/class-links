@@ -1,5 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:class_link/app/services/auth_rest_service.dart';
+import 'package:class_link/app/utils/methods.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
@@ -68,12 +71,14 @@ class ClassLink extends StatelessWidget {
 Future<void> init() async {
   SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-  await Firebase.initializeApp();
+  if (!isFirebaseUnSupportedPlatform()) {
+    await Firebase.initializeApp();
+  }
   await Hive.initFlutter();
   final database = HiveDatabase();
   Get.put<HiveDatabase>(database);
   await database.initDatabase();
-  Get.put(FirestoreService());
-  Get.put(AuthService());
+  // Get.put(FirestoreService());
+  Get.put(AuthRestService());
   Get.lazyPut(() => GoogleSheetSerevice());
 }

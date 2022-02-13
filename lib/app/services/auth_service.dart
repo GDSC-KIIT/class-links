@@ -19,6 +19,7 @@ class AuthService extends GetxService {
 
   @override
   void onInit() {
+    
     super.onInit();
     _auth = FirebaseAuth.instance;
     _user.value = _auth.currentUser;

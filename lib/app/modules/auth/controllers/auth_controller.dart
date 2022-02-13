@@ -1,3 +1,5 @@
+import 'package:class_link/app/services/auth_rest_service.dart';
+
 import '../../../utils/app_update.dart';
 
 import '../../../routes/app_pages.dart';
@@ -17,7 +19,7 @@ class AuthController extends GetxController {
 
   Future<void> login() async {
     loading.value = true;
-    final result = await Get.find<AuthService>().login();
+    final result = await Get.find<AuthRestService>().login();
     if (result == UserType.user) {
       final hiveDatabase = Get.find<HiveDatabase>();
       if (hiveDatabase.userInfo == null) {

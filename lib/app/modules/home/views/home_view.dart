@@ -1,3 +1,5 @@
+import 'package:class_link/app/services/auth_rest_service.dart';
+
 import '../../../services/auth_service.dart';
 
 import '../../../models/user_info/user_info.dart';
@@ -11,7 +13,7 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) =>
-      Get.find<AuthService>().userType() == UserType.user
+      Get.find<AuthRestService>().userType() == UserType.user
           ? batchViseTimetable()
           : TimeTablePage(homeController: controller);
 

@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:class_link/app/services/auth_rest_service.dart';
 import 'package:get/get.dart';
 import '../modules/admin/bindings/admin_binding.dart';
 import '../modules/admin/views/admin_view.dart';
@@ -21,7 +22,7 @@ class AppPages {
   AppPages._();
 
   static final INITIAL =
-      Get.find<AuthService>().user == null ? Routes.AUTH : Routes.HOME;
+      Get.find<AuthRestService>().user == null ? Routes.AUTH : Routes.HOME;
 
   static final routes = [
     GetPage(
