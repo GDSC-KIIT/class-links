@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import '../../../models/user_info/user_info.dart';
-import '../../../services/firestore_service.dart';
+import '../../../services/parse_service.dart';
 
 enum UserFilter { id, date, name }
 
@@ -18,14 +18,14 @@ class AdminController extends GetxController {
     late final List<UserInfo> users;
     if (batch.value != null) {
       if (batch.value == " None") {
-        users = await Get.find<FirestoreService>().userList;
+        users = await Get.find<AppDataService>().userList;
       } else {
-        users = (await Get.find<FirestoreService>().userList)
+        users = (await Get.find<AppDataService>().userList)
             .where((element) => element.batch == batch.value)
             .toList();
       }
     } else {
-      users = await Get.find<FirestoreService>().userList;
+      users = await Get.find<AppDataService>().userList;
     }
     if (!batchReady) {
       batches = _batchList(users);

@@ -2,7 +2,7 @@ import '../../../utils/app_update.dart';
 
 import '../../../routes/app_pages.dart';
 import '../../../services/auth_service.dart';
-import '../../../services/firestore_service.dart';
+import '../../../services/parse_service.dart';
 import '../../../services/hive_database.dart';
 import 'package:get/get.dart';
 
@@ -21,7 +21,7 @@ class AuthController extends GetxController {
     if (result == UserType.user) {
       final hiveDatabase = Get.find<HiveDatabase>();
       if (hiveDatabase.userInfo == null) {
-        final _userInfo = await Get.find<FirestoreService>().getUserInfo;
+        final _userInfo = await Get.find<AppDataService>().getUserInfo;
         if (_userInfo != null) {
           hiveDatabase.userInfo = _userInfo;
           await hiveDatabase.setUserInfo(_userInfo);

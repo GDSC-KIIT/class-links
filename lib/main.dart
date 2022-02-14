@@ -1,17 +1,18 @@
 import 'dart:async';
 
-import 'package:firebase_core/firebase_core.dart';
+import 'package:class_link/app/global/const/credentials.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 import 'app/global/transition_animation.dart/shared_axis_scale_transition.dart';
 import 'app/routes/app_pages.dart';
 import 'app/services/auth_service.dart';
-import 'app/services/firestore_service.dart';
+import 'app/services/parse_service.dart';
 import 'app/services/hive_database.dart';
 import 'app/services/log_service.dart';
 
@@ -68,12 +69,14 @@ class ClassLink extends StatelessWidget {
 Future<void> init() async {
   SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-  await Firebase.initializeApp();
+  await Parse().initialize(
+        AppCredentials.appID,
+        AppCredentials.serverURL);
   await Hive.initFlutter();
   final database = HiveDatabase();
   Get.put<HiveDatabase>(database);
   await database.initDatabase();
-  Get.put(FirestoreService());
+  Get.put(AppDataService());
   Get.put(AuthService());
   Get.lazyPut(() => GoogleSheetSerevice());
 }

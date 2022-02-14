@@ -1,3 +1,5 @@
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+
 import '../../../global/const/app_info.dart';
 import '../../../global/widget/user_icon.dart';
 import '../../../models/user_info/user_info.dart';
@@ -5,7 +7,6 @@ import '../../../routes/app_pages.dart';
 import '../../../services/auth_service.dart';
 import '../../../services/hive_database.dart';
 import '../../../utils/extension.dart';
-import 'package:firebase_auth/firebase_auth.dart' hide UserInfo;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -18,7 +19,7 @@ import 'package:share_plus/share_plus.dart';
 class ProfileView extends GetView<ProfileController> {
   const ProfileView({Key? key}) : super(key: key);
 
-  User? get user => Get.find<AuthService>().user;
+  ParseUser? get user => Get.find<AuthService>().user;
   UserInfo? get userInfo => Get.find<HiveDatabase>().userInfo;
 
   @override
@@ -113,7 +114,7 @@ class ProfileView extends GetView<ProfileController> {
           : const SizedBox();
 
   Text email() => Text(
-        user?.email ?? "",
+        user?.emailAddress?? "",
         textAlign: TextAlign.center,
         style: Get.theme.textTheme.subtitle1!.copyWith(
             fontSize: 18,
@@ -123,7 +124,7 @@ class ProfileView extends GetView<ProfileController> {
       );
 
   Text displayName() => Text(
-        user?.displayName ?? "",
+        user?.username ?? "",
         textAlign: TextAlign.center,
         style: Get.theme.textTheme.headline1!.copyWith(fontSize: 30),
       );

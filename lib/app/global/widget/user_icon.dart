@@ -22,7 +22,7 @@ class UserIcon extends StatelessWidget {
           : ClipOval(
               child: CachedNetworkImage(
                 placeholder: (_, __) => personIcon(),
-                imageUrl: Get.find<AuthService>().user?.photoURL ?? "",
+                imageUrl: Get.find<AuthService>().user?.get("photoURL"),
                 errorWidget: (_, __, ___) => personIcon(),
                 fit: BoxFit.cover,
               ),

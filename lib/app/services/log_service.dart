@@ -14,13 +14,13 @@ List<LogData> _listRowToListLog(List<List<String>> rowList) =>
     rowList.toListLogData.toList().reversed.toList();
 
 class GoogleSheetSerevice extends GetxService {
-  final _gsheet = GSheets(SheetCredentials.credentials);
+  final _gsheet = GSheets(AppCredentials.credentials);
   UserInfo? get _userInfo => Get.find<HiveDatabase>().userInfo;
 
   Future<bool?> addEntry(List<LogData> logs) async {
     try {
       final Spreadsheet spreadsheet = await _gsheet.spreadsheet(
-          GSheetUtils.getGSheetsId(SheetCredentials.spreadsheetId));
+          GSheetUtils.getGSheetsId(AppCredentials.spreadsheetId));
       final _userInfo = this._userInfo!;
       final _worksheetTitle =
           "${_userInfo.year}-${_userInfo.slot}-${_userInfo.batch}";
@@ -36,7 +36,7 @@ class GoogleSheetSerevice extends GetxService {
 
   Future<List<LogData>?> get readLog async {
     final Spreadsheet spreadsheet = await _gsheet
-        .spreadsheet(GSheetUtils.getGSheetsId(SheetCredentials.spreadsheetId));
+        .spreadsheet(GSheetUtils.getGSheetsId(AppCredentials.spreadsheetId));
     final _userInfo = this._userInfo!;
     final _worksheetTitle =
         "${_userInfo.year}-${_userInfo.slot}-${_userInfo.batch}";

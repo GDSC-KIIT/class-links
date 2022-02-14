@@ -9,7 +9,7 @@ import '../../../models/user_info/user_info.dart';
 import '../../subject_info/controllers/subject_info_controller.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/auth_service.dart';
-import '../../../services/firestore_service.dart';
+import '../../../services/parse_service.dart';
 import '../../../services/hive_database.dart';
 import '../../../services/log_service.dart';
 import '../../../utils/extension.dart';
@@ -74,7 +74,7 @@ class HomeController extends GetxController
     if (personalTimeTable) {
       hideEdit.value = false;
     } else {
-      final result2 = await Get.find<FirestoreService>().getUserInfo;
+      final result2 = await Get.find<AppDataService>().getUserInfo;
       if (result2 != null) {
         if (result2.role != "viewer") {
           hideEdit.value = false;
@@ -84,7 +84,7 @@ class HomeController extends GetxController
   }
 
   void initSubscription() {
-    final _firestoreService = Get.find<FirestoreService>();
+    final _firestoreService = Get.find<AppDataService>();
     if (personalTimeTable) {
       _timeTableSubscription =
           _firestoreService.personalTimeTableStream.listen((event) {
@@ -111,7 +111,7 @@ class HomeController extends GetxController
       initSubscription();
       return result;
     } else {
-      final result2 = await Get.find<FirestoreService>().getUserInfo;
+      final result2 = await Get.find<AppDataService>().getUserInfo;
       if (result2 != null) {
         await Get.find<HiveDatabase>().setUserInfo(result2);
         initSubscription();
@@ -147,8 +147,8 @@ class HomeController extends GetxController
     final user = Get.find<AuthService>().user;
     logData.add(
       LogData(
-          name: user?.displayName ?? "",
-          email: user?.email ?? "",
+          name: user?.username ?? "",
+          email: user?.emailAddress ?? "",
           log: changes,
           date: DateTime.now()),
     );
@@ -231,7 +231,7 @@ class HomeController extends GetxController
 
   Future<void> get _addOrUpdateTimeTable async {
     if (personalTimeTable) {
-      final email = Get.find<AuthService>().user!.email!;
+      final email = Get.find<AuthService>().user!.emailAddress!;
       final timeTable = TimeTable(
         week: week.value,
         creatorId: email,
@@ -240,7 +240,7 @@ class HomeController extends GetxController
         slot: -1,
         year: -1,
       );
-      await Get.find<FirestoreService>()
+      await Get.find<AppDataService>()
           .addOrUpdatePersonalTimeTable(timeTable);
     } else {
       final _userInfo = Get.find<HiveDatabase>().userInfo!;
@@ -252,7 +252,7 @@ class HomeController extends GetxController
         slot: _userInfo.slot,
         date: DateTime.now(),
       );
-      await Get.find<FirestoreService>().addOrUpdateBatchTimeTable(timeTable);
+      await Get.find<AppDataService>().addOrUpdateBatchTimeTable(timeTable);
     }
   }
 

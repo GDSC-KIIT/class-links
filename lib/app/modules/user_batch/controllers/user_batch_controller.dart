@@ -1,7 +1,7 @@
 import '../../../models/user_info/user_info.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/auth_service.dart';
-import '../../../services/firestore_service.dart';
+import '../../../services/parse_service.dart';
 import '../../../services/hive_database.dart';
 import 'package:get/get.dart';
 
@@ -45,8 +45,8 @@ class UserBatchController extends GetxController {
     final _user = Get.find<AuthService>().user!;
 
     final userInfo = UserInfo(
-      id: _user.email!,
-      userName: _user.displayName ?? "",
+      id: _user.emailAddress!,
+      userName: _user.username ?? "",
       slot: currentScheme.value ?? 1,
       year: currentYear.value!,
       batch: currentBatch.value!,
@@ -54,7 +54,7 @@ class UserBatchController extends GetxController {
       date: DateTime.now(),
     );
 
-    if (await Get.find<FirestoreService>().addUserInfo(userInfo)) {
+    if (await Get.find<AppDataService>().addUserInfo(userInfo)) {
       await Get.find<HiveDatabase>().setUserInfo(userInfo);
       Get.offAllNamed(Routes.HOME);
     }

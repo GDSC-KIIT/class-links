@@ -1,7 +1,7 @@
 import 'package:animations/animations.dart';
 
 import '../../../models/user_info/user_info.dart';
-import '../../../services/firestore_service.dart';
+import '../../../services/parse_service.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -13,7 +13,7 @@ class AdminView extends GetView<AdminController> {
 
   @override
   Widget build(BuildContext context) {
-    final firestoreService = Get.find<FirestoreService>();
+    final firestoreService = Get.find<AppDataService>();
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(

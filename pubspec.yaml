@@ -10,10 +10,7 @@ dependencies:
   google_fonts: ^2.1.1
   flutter_svg: ^1.0.0
   get: ^4.6.1
-  firebase_core: ^1.10.6
-  firebase_auth: ^3.3.4
   google_sign_in: ^5.2.1
-  cloud_firestore: ^3.1.5
   freezed_annotation: ^1.1.0
   json_annotation: ^4.3.0
   hive: ^2.0.4
@@ -31,6 +28,8 @@ dependencies:
   gsheets: ^0.3.2
   in_app_update: ^2.0.0
   share_plus: ^3.0.4
+  parse_server_sdk_flutter: ^3.1.0
+  googleapis_auth:
   flutter:
     sdk: flutter
 

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:in_app_update/in_app_update.dart';
 
@@ -8,8 +10,12 @@ class CheckUpdate extends StatelessWidget {
     required this.child,
   }) : super(key: key);
 
-  Future<AppUpdateInfo> checkForUpdate() async =>
-      await InAppUpdate.checkForUpdate();
+  Future<AppUpdateInfo> checkForUpdate() async {
+    if (Platform.isAndroid) {
+      return await InAppUpdate.checkForUpdate();
+    } 
+    return Future.delayed(Duration.zero);
+  }
 
   @override
   Widget build(BuildContext context) => FutureBuilder<AppUpdateInfo>(
